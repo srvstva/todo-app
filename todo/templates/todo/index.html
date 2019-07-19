@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Todo Index {% endblock %}
+{% block content %}
+<div class="columns">
+    <div class="column is-4">
+        <input class="input" type="text" placeholder="Enter a todo item" v-model="newTodo.title" />
+    </div>
+    <div class="column is-2">
+        <button class="button is-primary" v-on:click="addTodo()">Add a new todo</button>
+    </div>
+</div>
+<table class="table is-bordered is-hoverable">
+    <thead>
+        <tr>
+            <th>Completed</th>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <div v-show="todos.length == 0">Nothing here...</div>
+        <tr v-for="todo in todos">
+            <td><input type="checkbox" v-model="todo.completed" v-on:change="updateTodo(todo)" /></td>
+            <td>[[todo.id]]</td>
+            <td>
+                <p v-bind:class="{'strikeout': todo.completed}">[[todo.title]]</p>
+            </td>
+            <td>
+                <button :disabled="!todo.completed" class="button is-danger is-outlined" v-on:click="destroy(todo.id)">
+                    <i class="fas fa-trash fa-1x"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock content %}
